@@ -1026,7 +1026,7 @@
 // CONFIG
 // ─────────────────────────────────────────────────────────────────────────────
 
-const API_URL = "http://127.0.0.1:8000/chat";
+const API_URL = "/chat";
 const MODEL     = 'ilmu-glm-5.1';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1208,7 +1208,7 @@ async function fetchSignal(category, inputId, btnId) {
   const timeout = setTimeout(() => controller.abort(), 30000); // 30s timeout
 
   try {
-    const res = await fetch('http://127.0.0.1:8000/search-signal', {
+    const res = await fetch('/search-signal', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ category, context }),
@@ -1232,7 +1232,7 @@ async function fetchSignal(category, inputId, btnId) {
       showToast(`Retrying ${category} search…`, 'amber');
       await sleep(2000);
       try {
-        const retryRes = await fetch('http://127.0.0.1:8000/search-signal', {
+        const retryRes = await fetch('/search-signal', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ category, context }),
