@@ -1,0 +1,2102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InvenIQ — Inventory Intelligence Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ── Theme: Dark (default) ── */
+  :root, [data-theme="dark"] {
+    --bg:        #0a0c10;
+    --surface:   #111318;
+    --surface2:  #181c24;
+    --border:    #1e2430;
+    --border2:   #252d3d;
+    --accent:    #00d4ff;
+    --accent2:   #0099cc;
+    --green:     #00e5a0;
+    --amber:     #ffb347;
+    --red:       #ff5f6d;
+    --text:      #e8edf5;
+    --text2:     #8b96a8;
+    --text3:     #4a5568;
+    --glow:      0 0 30px rgba(0,212,255,0.15);
+    --glow2:     0 0 60px rgba(0,212,255,0.08);
+    --header-bg: rgba(10,12,16,0.85);
+    --accent-a08: rgba(0,212,255,0.08);
+    --accent-a10: rgba(0,212,255,0.1);
+    --accent-a15: rgba(0,212,255,0.15);
+    --accent-a20: rgba(0,212,255,0.2);
+    --accent-a04: rgba(0,212,255,0.04);
+    --accent-a06: rgba(0,212,255,0.06);
+    --accent-a05: rgba(0,212,255,0.05);
+    --green-a08:  rgba(0,229,160,0.08);
+    --green-a20:  rgba(0,229,160,0.2);
+    --green-a06:  rgba(0,229,160,0.06);
+    --green-a04:  rgba(0,229,160,0.04);
+    --green-a25:  rgba(0,229,160,0.25);
+    --amber-a06:  rgba(255,179,71,0.06);
+    --amber-a10:  rgba(255,179,71,0.1);
+    --amber-a25:  rgba(255,179,71,0.25);
+    --red-a12:    rgba(255,95,109,0.12);
+    --red-a10:    rgba(255,95,109,0.1);
+    --red-a15:    rgba(255,95,109,0.15);
+    --red-a30:    rgba(255,95,109,0.3);
+    --text2-a10:  rgba(139,150,168,0.1);
+    --text2-a06:  rgba(139,150,168,0.06);
+    --text2-a20:  rgba(139,150,168,0.2);
+  }
+  /* ── Theme: Ocean ── */
+  [data-theme="ocean"] {
+    --bg:        #0b1628;
+    --surface:   #0f1d33;
+    --surface2:  #152640;
+    --border:    #1b3050;
+    --border2:   #244068;
+    --accent:    #4dc9f6;
+    --accent2:   #2aa3d0;
+    --green:     #3de8b0;
+    --amber:     #f0b840;
+    --red:       #f06070;
+    --text:      #dce8f8;
+    --text2:     #7e99be;
+    --text3:     #4a6080;
+    --glow:      0 0 30px rgba(77,201,246,0.12);
+    --glow2:     0 0 60px rgba(77,201,246,0.06);
+    --header-bg: rgba(11,22,40,0.85);
+    --accent-a08: rgba(77,201,246,0.08);
+    --accent-a10: rgba(77,201,246,0.1);
+    --accent-a15: rgba(77,201,246,0.15);
+    --accent-a20: rgba(77,201,246,0.2);
+    --accent-a04: rgba(77,201,246,0.04);
+    --accent-a06: rgba(77,201,246,0.06);
+    --accent-a05: rgba(77,201,246,0.05);
+    --green-a08:  rgba(61,232,176,0.08);
+    --green-a20:  rgba(61,232,176,0.2);
+    --green-a06:  rgba(61,232,176,0.06);
+    --green-a04:  rgba(61,232,176,0.04);
+    --green-a25:  rgba(61,232,176,0.25);
+    --amber-a06:  rgba(240,184,64,0.06);
+    --amber-a10:  rgba(240,184,64,0.1);
+    --amber-a25:  rgba(240,184,64,0.25);
+    --red-a12:    rgba(240,96,112,0.12);
+    --red-a10:    rgba(240,96,112,0.1);
+    --red-a15:    rgba(240,96,112,0.15);
+    --red-a30:    rgba(240,96,112,0.3);
+    --text2-a10:  rgba(126,153,190,0.1);
+    --text2-a06:  rgba(126,153,190,0.06);
+    --text2-a20:  rgba(126,153,190,0.2);
+  }
+
+  /* ── Theme: Forest ── */
+  [data-theme="forest"] {
+    --bg:        #0c110e;
+    --surface:   #121a15;
+    --surface2:  #1a251d;
+    --border:    #223328;
+    --border2:   #2c4435;
+    --accent:    #4ae08a;
+    --accent2:   #2eb86a;
+    --green:     #5ef0a0;
+    --amber:     #e0b84a;
+    --red:       #e06060;
+    --text:      #daf0e4;
+    --text2:     #80b090;
+    --text3:     #4a6855;
+    --glow:      0 0 30px rgba(74,224,138,0.12);
+    --glow2:     0 0 60px rgba(74,224,138,0.06);
+    --header-bg: rgba(12,17,14,0.85);
+    --accent-a08: rgba(74,224,138,0.08);
+    --accent-a10: rgba(74,224,138,0.1);
+    --accent-a15: rgba(74,224,138,0.15);
+    --accent-a20: rgba(74,224,138,0.2);
+    --accent-a04: rgba(74,224,138,0.04);
+    --accent-a06: rgba(74,224,138,0.06);
+    --accent-a05: rgba(74,224,138,0.05);
+    --green-a08:  rgba(94,240,160,0.08);
+    --green-a20:  rgba(94,240,160,0.2);
+    --green-a06:  rgba(94,240,160,0.06);
+    --green-a04:  rgba(94,240,160,0.04);
+    --green-a25:  rgba(94,240,160,0.25);
+    --amber-a06:  rgba(224,184,74,0.06);
+    --amber-a10:  rgba(224,184,74,0.1);
+    --amber-a25:  rgba(224,184,74,0.25);
+    --red-a12:    rgba(224,96,96,0.12);
+    --red-a10:    rgba(224,96,96,0.1);
+    --red-a15:    rgba(224,96,96,0.15);
+    --red-a30:    rgba(224,96,96,0.3);
+    --text2-a10:  rgba(128,176,144,0.1);
+    --text2-a06:  rgba(128,176,144,0.06);
+    --text2-a20:  rgba(128,176,144,0.2);
+  }
+
+  /* ── Theme: Sunset ── */
+  [data-theme="sunset"] {
+    --bg:        #15100d;
+    --surface:   #1e1612;
+    --surface2:  #281e18;
+    --border:    #362820;
+    --border2:   #453528;
+    --accent:    #ff8a50;
+    --accent2:   #d06830;
+    --green:     #50d890;
+    --amber:     #ffb347;
+    --red:       #ff5f6d;
+    --text:      #f5e8de;
+    --text2:     #b89880;
+    --text3:     #6a5548;
+    --glow:      0 0 30px rgba(255,138,80,0.12);
+    --glow2:     0 0 60px rgba(255,138,80,0.06);
+    --header-bg: rgba(21,16,13,0.85);
+    --accent-a08: rgba(255,138,80,0.08);
+    --accent-a10: rgba(255,138,80,0.1);
+    --accent-a15: rgba(255,138,80,0.15);
+    --accent-a20: rgba(255,138,80,0.2);
+    --accent-a04: rgba(255,138,80,0.04);
+    --accent-a06: rgba(255,138,80,0.06);
+    --accent-a05: rgba(255,138,80,0.05);
+    --green-a08:  rgba(80,216,144,0.08);
+    --green-a20:  rgba(80,216,144,0.2);
+    --green-a06:  rgba(80,216,144,0.06);
+    --green-a04:  rgba(80,216,144,0.04);
+    --green-a25:  rgba(80,216,144,0.25);
+    --amber-a06:  rgba(255,179,71,0.06);
+    --amber-a10:  rgba(255,179,71,0.1);
+    --amber-a25:  rgba(255,179,71,0.25);
+    --red-a12:    rgba(255,95,109,0.12);
+    --red-a10:    rgba(255,95,109,0.1);
+    --red-a15:    rgba(255,95,109,0.15);
+    --red-a30:    rgba(255,95,109,0.3);
+    --text2-a10:  rgba(184,152,128,0.1);
+    --text2-a06:  rgba(184,152,128,0.06);
+    --text2-a20:  rgba(184,152,128,0.2);
+  }
+
+  /* ── Theme: Lavender ── */
+  [data-theme="lavender"] {
+    --bg:        #0e0c16;
+    --surface:   #151222;
+    --surface2:  #1d182e;
+    --border:    #282240;
+    --border2:   #352c50;
+    --accent:    #a78bfa;
+    --accent2:   #7c5fd0;
+    --green:     #6ee7b7;
+    --amber:     #fbbf24;
+    --red:       #f87171;
+    --text:      #ede9fe;
+    --text2:     #a09ab8;
+    --text3:     #5e5478;
+    --glow:      0 0 30px rgba(167,139,250,0.12);
+    --glow2:     0 0 60px rgba(167,139,250,0.06);
+    --header-bg: rgba(14,12,22,0.85);
+    --accent-a08: rgba(167,139,250,0.08);
+    --accent-a10: rgba(167,139,250,0.1);
+    --accent-a15: rgba(167,139,250,0.15);
+    --accent-a20: rgba(167,139,250,0.2);
+    --accent-a04: rgba(167,139,250,0.04);
+    --accent-a06: rgba(167,139,250,0.06);
+    --accent-a05: rgba(167,139,250,0.05);
+    --green-a08:  rgba(110,231,183,0.08);
+    --green-a20:  rgba(110,231,183,0.2);
+    --green-a06:  rgba(110,231,183,0.06);
+    --green-a04:  rgba(110,231,183,0.04);
+    --green-a25:  rgba(110,231,183,0.25);
+    --amber-a06:  rgba(251,191,36,0.06);
+    --amber-a10:  rgba(251,191,36,0.1);
+    --amber-a25:  rgba(251,191,36,0.25);
+    --red-a12:    rgba(248,113,113,0.12);
+    --red-a10:    rgba(248,113,113,0.1);
+    --red-a15:    rgba(248,113,113,0.15);
+    --red-a30:    rgba(248,113,113,0.3);
+    --text2-a10:  rgba(160,154,184,0.1);
+    --text2-a06:  rgba(160,154,184,0.06);
+    --text2-a20:  rgba(160,154,184,0.2);
+  }
+
+  /* ── Theme: Cherry ── */
+  [data-theme="cherry"] {
+    --bg:        #140a0e;
+    --surface:   #1c1014;
+    --surface2:  #26161c;
+    --border:    #38222a;
+    --border2:   #4a2e38;
+    --accent:    #f43f6e;
+    --accent2:   #c0284e;
+    --green:     #34d399;
+    --amber:     #fbbf24;
+    --red:       #ef4444;
+    --text:      #fce4ec;
+    --text2:     #c4899a;
+    --text3:     #6e3a4a;
+    --glow:      0 0 30px rgba(244,63,110,0.12);
+    --glow2:     0 0 60px rgba(244,63,110,0.06);
+    --header-bg: rgba(20,10,14,0.85);
+    --accent-a08: rgba(244,63,110,0.08);
+    --accent-a10: rgba(244,63,110,0.1);
+    --accent-a15: rgba(244,63,110,0.15);
+    --accent-a20: rgba(244,63,110,0.2);
+    --accent-a04: rgba(244,63,110,0.04);
+    --accent-a06: rgba(244,63,110,0.06);
+    --accent-a05: rgba(244,63,110,0.05);
+    --green-a08:  rgba(52,211,153,0.08);
+    --green-a20:  rgba(52,211,153,0.2);
+    --green-a06:  rgba(52,211,153,0.06);
+    --green-a04:  rgba(52,211,153,0.04);
+    --green-a25:  rgba(52,211,153,0.25);
+    --amber-a06:  rgba(251,191,36,0.06);
+    --amber-a10:  rgba(251,191,36,0.1);
+    --amber-a25:  rgba(251,191,36,0.25);
+    --red-a12:    rgba(239,68,68,0.12);
+    --red-a10:    rgba(239,68,68,0.1);
+    --red-a15:    rgba(239,68,68,0.15);
+    --red-a30:    rgba(239,68,68,0.3);
+    --text2-a10:  rgba(196,137,154,0.1);
+    --text2-a06:  rgba(196,137,154,0.06);
+    --text2-a20:  rgba(196,137,154,0.2);
+  }
+
+  /* ── Theme: Light ── */
+  [data-theme="light"] {
+    --bg:        #f7f8fb;
+    --surface:   #ffffff;
+    --surface2:  #f1f3f8;
+    --border:    #e2e6ee;
+    --border2:   #ccd2dc;
+    --accent:    #0077b6;
+    --accent2:   #005f92;
+    --green:     #059669;
+    --amber:     #d97706;
+    --red:       #dc2626;
+    --text:      #1a202c;
+    --text2:     #4a5568;
+    --text3:     #94a3b8;
+    --glow:      0 4px 20px rgba(0,119,182,0.08);
+    --glow2:     0 8px 40px rgba(0,119,182,0.05);
+    --header-bg: rgba(255,255,255,0.85);
+    --accent-a08: rgba(0,119,182,0.08);
+    --accent-a10: rgba(0,119,182,0.1);
+    --accent-a15: rgba(0,119,182,0.15);
+    --accent-a20: rgba(0,119,182,0.2);
+    --accent-a04: rgba(0,119,182,0.04);
+    --accent-a06: rgba(0,119,182,0.06);
+    --accent-a05: rgba(0,119,182,0.05);
+    --green-a08:  rgba(5,150,105,0.08);
+    --green-a20:  rgba(5,150,105,0.2);
+    --green-a06:  rgba(5,150,105,0.06);
+    --green-a04:  rgba(5,150,105,0.04);
+    --green-a25:  rgba(5,150,105,0.25);
+    --amber-a06:  rgba(217,119,6,0.06);
+    --amber-a10:  rgba(217,119,6,0.1);
+    --amber-a25:  rgba(217,119,6,0.25);
+    --red-a12:    rgba(220,38,38,0.12);
+    --red-a10:    rgba(220,38,38,0.1);
+    --red-a15:    rgba(220,38,38,0.15);
+    --red-a30:    rgba(220,38,38,0.3);
+    --text2-a10:  rgba(74,85,104,0.1);
+    --text2-a06:  rgba(74,85,104,0.06);
+    --text2-a20:  rgba(74,85,104,0.2);
+  }
+
+  /* Light-theme-specific tweaks: invert shadow + soften borders */
+  [data-theme="light"] .theme-option {
+    border: 1.5px solid rgba(0,0,0,0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ── Background texture ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 20%, var(--accent-a04) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, var(--green-a04) 0%, transparent 60%);
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ── Layout ── */
+  .app { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100vh; }
+
+  /* ── Header ── */
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 32px;
+    border-bottom: 1px solid var(--border);
+    background: var(--header-bg);
+    backdrop-filter: blur(16px);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-mark {
+    width: 34px; height: 34px;
+    background: linear-gradient(135deg, var(--accent), var(--green));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; color: #000;
+  }
+  .logo-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: -0.3px; }
+  .logo-name span { color: var(--accent); }
+  .logo-tag { font-size: 10px; color: var(--text3); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 1px; margin-top: 1px; }
+  .status-pill {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--green-a08); border: 1px solid var(--green-a20);
+    padding: 4px 12px; border-radius: 20px;
+    font-size: 11px; color: var(--green); font-family: 'DM Mono', monospace;
+  }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse-dot 2s infinite; }
+  @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+
+  /* Theme switcher */
+  .theme-switcher {
+    display: flex; align-items: center; gap: 6px;
+    position: relative;
+  }
+  .theme-toggle-btn {
+    background: var(--surface2); border: 1px solid var(--border2);
+    border-radius: 6px; padding: 5px 10px; cursor: pointer;
+    font-size: 13px; color: var(--text2); display: flex; align-items: center; gap: 5px;
+    transition: all 0.15s;
+  }
+  .theme-toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .theme-dropdown {
+    display: none; position: absolute; top: 100%; right: 0; margin-top: 6px;
+    background: var(--surface); border: 1px solid var(--border2);
+    border-radius: 8px; padding: 4px; z-index: 200; min-width: 160px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .theme-dropdown.open { display: block; }
+  .theme-option {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 10px; border-radius: 5px; cursor: pointer;
+    font-size: 12px; color: var(--text2); transition: all 0.12s;
+    border: none; background: none; width: 100%; text-align: left;
+  }
+  .theme-option:hover { background: var(--accent-a08); color: var(--text); }
+  .theme-option.active { background: var(--accent-a10); color: var(--accent); }
+  .theme-dot {
+    width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+    border: 1.5px solid rgba(255,255,255,0.15);
+  }
+
+  /* ── Main layout ── */
+  .main { display: flex; flex: 1; overflow: hidden; height: calc(100vh - 65px); }
+
+  /* ── Left Panel ── */
+  .left-panel {
+    width: 340px; min-width: 340px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .panel-section {
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .panel-section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--text3); margin-bottom: 12px;
+  }
+
+  /* Upload zone */
+  .upload-zone {
+    border: 1.5px dashed var(--border2);
+    border-radius: 10px;
+    padding: 24px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .upload-zone:hover, .upload-zone.drag-over {
+    border-color: var(--accent);
+    background: var(--accent-a04);
+  }
+  .upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .upload-icon { font-size: 28px; margin-bottom: 8px; }
+  .upload-title { font-weight: 500; font-size: 13px; color: var(--text); margin-bottom: 4px; }
+  .upload-sub { font-size: 11px; color: var(--text3); }
+  .upload-success { color: var(--green); }
+
+  /* CSV file list */
+  .csv-file-list { margin-top: 10px; display: flex; flex-direction: column; gap: 4px; }
+  .csv-file-item {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 6px; padding: 6px 10px; font-size: 11px; color: var(--text2);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .csv-file-item:hover { border-color: var(--accent); }
+  .csv-file-item.active { border-color: var(--accent); background: var(--accent-a06); color: var(--text); }
+  .csv-file-item .fi-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .csv-file-item .fi-rows { color: var(--text3); font-family: 'DM Mono', monospace; font-size: 10px; margin-left: 8px; }
+  .csv-file-item .fi-remove {
+    background: none; border: none; color: var(--text3); cursor: pointer;
+    font-size: 13px; padding: 0 2px; margin-left: 6px; line-height: 1;
+  }
+  .csv-file-item .fi-remove:hover { color: var(--red); }
+
+  /* Image file list */
+  .img-file-list { margin-top: 10px; display: flex; flex-direction: column; gap: 4px; }
+  .img-file-item {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 6px; padding: 6px 10px; font-size: 11px; color: var(--text2);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .img-file-item:hover { border-color: var(--accent); }
+  .img-file-item .ifi-thumb {
+    width: 32px; height: 32px; border-radius: 4px; object-fit: cover; flex-shrink: 0;
+    border: 1px solid var(--border2);
+  }
+  .img-file-item .ifi-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .img-file-item .ifi-remove {
+    background: none; border: none; color: var(--text3); cursor: pointer;
+    font-size: 13px; padding: 0 2px; margin-left: 4px; line-height: 1;
+  }
+  .img-file-item .ifi-remove:hover { color: var(--red); }
+
+  /* Image preview */
+  .img-preview {
+    display: none; margin-top: 10px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+  }
+  .img-preview.show { display: block; }
+  .img-preview-header {
+    padding: 8px 12px;
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text2);
+    background: var(--border); display: flex; justify-content: space-between;
+  }
+  .img-preview img {
+    width: 100%; max-height: 220px; object-fit: contain;
+    display: block; background: var(--bg);
+  }
+
+  /* CSV preview */
+  .csv-preview {
+    display: none;
+    margin-top: 12px;
+    background: var(--surface2);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .csv-preview.show { display: block; }
+  .csv-preview-header {
+    padding: 8px 12px;
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text2);
+    background: var(--border); display: flex; justify-content: space-between;
+  }
+  .csv-table { overflow-x: auto; max-height: 140px; }
+  .csv-table table { width: 100%; border-collapse: collapse; font-size: 10px; font-family: 'DM Mono', monospace; }
+  .csv-table th { padding: 5px 8px; background: var(--accent-a06); color: var(--accent); text-align: left; white-space: nowrap; }
+  .csv-table td { padding: 4px 8px; color: var(--text2); border-top: 1px solid var(--border); white-space: nowrap; }
+
+  /* Signals panel */
+  .signal-group { margin-bottom: 10px; }
+  .signal-label { font-size: 11px; color: var(--text2); margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
+  .signal-label span { font-size: 13px; }
+  .signal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; }
+  .signal-header-left { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text2); }
+  .signal-header-left span { font-size: 13px; }
+  .signal-fetch {
+    background: var(--accent-a08); border: 1px solid var(--accent-a20);
+    border-radius: 4px; padding: 2px 8px; cursor: pointer;
+    font-size: 10px; font-family: 'DM Mono', monospace; color: var(--accent);
+    display: flex; align-items: center; gap: 4px; transition: all 0.15s;
+  }
+  .signal-fetch:hover { background: var(--accent-a15); border-color: var(--accent); }
+  .signal-fetch.loading { opacity: 0.6; pointer-events: none; }
+  .signal-fetch .sf-spinner { display: none; }
+  .signal-fetch.loading .sf-spinner { display: inline-block; animation: spin 1s linear infinite; }
+  .signal-fetch.loading .sf-icon { display: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  textarea.signal-input, input.signal-input {
+    width: 100%; background: var(--surface2);
+    border: 1px solid var(--border); border-radius: 6px;
+    color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 12px;
+    padding: 7px 10px; resize: none; outline: none; transition: border-color 0.2s;
+  }
+  textarea.signal-input { height: 58px; }
+  textarea.signal-input:focus, input.signal-input:focus { border-color: var(--accent2); }
+
+  /* Quick query buttons */
+  .quick-btns { display: flex; flex-direction: column; gap: 6px; }
+  .quick-btn {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 7px; padding: 9px 12px; cursor: pointer;
+    text-align: left; color: var(--text2); font-size: 12px;
+    font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .quick-btn:hover { border-color: var(--accent); color: var(--text); background: var(--accent-a05); }
+  .quick-btn .qb-icon { font-size: 14px; flex-shrink: 0; }
+
+  /* ── Chat area ── */
+  .chat-area {
+    flex: 1; display: flex; flex-direction: column;
+    background: var(--bg);
+    min-width: 0;
+  }
+
+  .chat-header {
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--surface);
+  }
+  .chat-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; }
+  .chat-sub { font-size: 11px; color: var(--text3); margin-top: 1px; }
+  .model-badge {
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent);
+    background: var(--accent-a08); border: 1px solid var(--accent-a20);
+    padding: 3px 9px; border-radius: 4px;
+  }
+
+  .messages {
+    flex: 1; overflow-y: auto;
+    padding: 24px;
+    display: flex; flex-direction: column; gap: 20px;
+    scroll-behavior: smooth;
+    min-height: 0;
+  }
+  .messages::-webkit-scrollbar { width: 4px; }
+  .messages::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+  /* Welcome card */
+  .welcome-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    text-align: center;
+  }
+  .welcome-card .wc-icon { font-size: 40px; margin-bottom: 14px; }
+  .welcome-card h2 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .welcome-card p { color: var(--text2); font-size: 13px; max-width: 400px; margin: 0 auto 18px; line-height: 1.7; }
+  .welcome-chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .welcome-chip {
+    background: var(--surface2); border: 1px solid var(--border2);
+    border-radius: 20px; padding: 5px 14px;
+    font-size: 12px; color: var(--text2); cursor: pointer; transition: all 0.15s;
+  }
+  .welcome-chip:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Message bubbles */
+  .msg { display: flex; gap: 12px; animation: fadeSlideUp 0.3s ease; }
+  @keyframes fadeSlideUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+  .msg-avatar {
+    width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 14px;
+  }
+  .msg.user .msg-avatar { background: var(--accent-a15); order: 2; }
+  .msg.user { flex-direction: row-reverse; }
+  .msg.assistant .msg-avatar { background: linear-gradient(135deg, var(--accent-a20), var(--green-a20)); }
+
+  .msg-content { max-width: 680px; }
+  .msg.user .msg-content { align-items: flex-end; display: flex; flex-direction: column; }
+
+  /* Image thumbnails in chat */
+  .msg-images { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; justify-content: flex-end; }
+  .msg-image {
+    max-width: 200px; max-height: 160px; border-radius: 8px;
+    border: 1px solid var(--border2); object-fit: cover; cursor: pointer;
+    transition: transform 0.15s, border-color 0.15s;
+  }
+  .msg-image:hover { transform: scale(1.03); border-color: var(--accent); }
+
+  .msg-bubble {
+    padding: 12px 16px; border-radius: 12px;
+    font-size: 13.5px; line-height: 1.7;
+  }
+  .msg.user .msg-bubble {
+    background: var(--accent-a10); border: 1px solid var(--accent-a20);
+    border-radius: 12px 4px 12px 12px; color: var(--text);
+  }
+  .msg.assistant .msg-bubble {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px 12px 12px 12px;
+    color: var(--text);
+  }
+
+  /* Answer card — the structured AI response */
+  .answer-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden;
+    max-width: 700px;
+  }
+  .answer-header {
+    padding: 10px 16px;
+    background: linear-gradient(90deg, var(--accent-a06), var(--green-a04));
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent); text-transform: uppercase; letter-spacing: 1px;
+  }
+  .answer-body { padding: 16px; }
+
+  /* Answer blocks */
+  .ans-block { margin-bottom: 14px; }
+  .ans-block:last-child { margin-bottom: 0; }
+  .ans-label {
+    font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--text3); margin-bottom: 5px;
+  }
+  .ans-value { font-size: 13.5px; color: var(--text); line-height: 1.6; }
+  .ans-value.big { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; color: var(--accent); }
+  .ans-value.action { color: var(--green); font-weight: 500; }
+  .ans-value.warn { color: var(--amber); }
+  .ans-value.danger { color: var(--red); }
+
+  /* Metric row */
+  .metric-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  .metric-card {
+    flex: 1; min-width: 100px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 12px;
+  }
+  .metric-card .mc-label { font-size: 10px; color: var(--text3); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.8px; }
+  .metric-card .mc-value { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-top: 2px; }
+  .mc-value.green { color: var(--green); }
+  .mc-value.amber { color: var(--amber); }
+  .mc-value.red   { color: var(--red); }
+  .mc-value.blue  { color: var(--accent); }
+
+  /* Factor list */
+  .factor-list { display: flex; flex-direction: column; gap: 6px; }
+  .factor-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--text2);
+  }
+  .factor-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .factor-dot.pos { background: var(--green); }
+  .factor-dot.neg { background: var(--red); }
+  .factor-dot.neu { background: var(--amber); }
+
+  /* Collapsible "See more" section */
+  .collapse-toggle {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 6px; padding: 6px 12px; cursor: pointer;
+    font-size: 11px; font-family: 'DM Mono', monospace; color: var(--text3);
+    transition: all 0.15s; margin-top: 10px; user-select: none;
+  }
+  .collapse-toggle:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-a04); }
+  .collapse-toggle .ct-arrow { transition: transform 0.2s; font-size: 10px; }
+  .collapse-toggle.open .ct-arrow { transform: rotate(90deg); }
+  .collapse-body {
+    max-height: 0; overflow: hidden; transition: max-height 0.35s ease, opacity 0.25s ease;
+    opacity: 0;
+  }
+  .collapse-body.open {
+    max-height: 1200px; opacity: 1;
+  }
+
+  /* Action box */
+    background: var(--green-a06); border: 1px solid var(--green-a20);
+    border-radius: 8px; padding: 12px 14px;
+    margin-top: 4px;
+  }
+  .action-box.reorder { background: var(--green-a06); border-color: var(--green-a25); }
+  .action-box.discount { background: var(--amber-a06); border-color: var(--amber-a25); }
+  .action-box.none { background: var(--text2-a06); border-color: var(--text2-a20); }
+  .action-box .ab-title { font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+  .action-box .ab-body { font-size: 12.5px; color: var(--text2); line-height: 1.6; }
+
+  /* Signals used */
+  .signals-used { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+  .signal-tag {
+    font-size: 10px; font-family: 'DM Mono', monospace;
+    padding: 2px 8px; border-radius: 4px;
+  }
+  .signal-tag.calendar { background: var(--accent-a10); color: var(--accent); }
+  .signal-tag.weather  { background: var(--amber-a10); color: var(--amber); }
+  .signal-tag.news     { background: var(--red-a10); color: var(--red); }
+  .signal-tag.other    { background: var(--text2-a10); color: var(--text2); }
+
+  /* Typing indicator */
+  .typing-indicator { display: flex; align-items: center; gap: 12px; padding: 4px 0; }
+  .typing-dots { display: flex; gap: 4px; }
+  .typing-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); animation: typingBounce 1.2s infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typingBounce { 0%,60%,100%{transform:translateY(0);opacity:0.4} 30%{transform:translateY(-6px);opacity:1} }
+  .typing-text { font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; }
+
+  /* Step display during thinking */
+  .thinking-steps { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--text3); }
+  .thinking-step { animation: fadeSlideUp 0.3s ease; display: flex; align-items: center; gap: 6px; }
+  .thinking-step .ts-icon { color: var(--accent); }
+
+  /* Input bar */
+  .input-bar {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  /* Attachment chips row */
+  .attachment-row {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-bottom: 8px;
+  }
+  .attachment-row:empty { margin-bottom: 0; display: none; }
+  .att-chip {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--surface2); border: 1px solid var(--border2);
+    border-radius: 8px; padding: 4px 8px 4px 10px;
+    font-size: 11px; color: var(--text2);
+    animation: fadeSlideUp 0.2s ease;
+    max-width: 200px;
+  }
+  .att-chip .att-icon { font-size: 13px; flex-shrink: 0; }
+  .att-chip .att-thumb {
+    width: 24px; height: 24px; border-radius: 4px; object-fit: cover; flex-shrink: 0;
+  }
+  .att-chip .att-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+  .att-chip .att-remove {
+    background: none; border: none; color: var(--text3); cursor: pointer;
+    font-size: 12px; padding: 0; line-height: 1;
+  }
+  .att-chip .att-remove:hover { color: var(--red); }
+
+  .input-row {
+    display: flex; gap: 10px; align-items: flex-end;
+    background: var(--surface2); border: 1.5px solid var(--border2);
+    border-radius: 12px; padding: 10px 12px;
+    transition: border-color 0.2s;
+  }
+  .input-row:focus-within { border-color: var(--accent2); box-shadow: var(--glow); }
+  .attach-btn {
+    width: 32px; height: 32px; border-radius: 6px; border: none; cursor: pointer;
+    background: transparent; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 17px; color: var(--text3); transition: all 0.15s;
+  }
+  .attach-btn:hover { color: var(--accent); background: var(--accent-a08); }
+  #userInput {
+    flex: 1; background: none; border: none; outline: none;
+    color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px;
+    resize: none; max-height: 120px; min-height: 22px; line-height: 1.5;
+  }
+  #userInput::placeholder { color: var(--text3); }
+  .send-btn {
+    width: 36px; height: 36px; border-radius: 8px; border: none; cursor: pointer;
+    background: var(--accent); display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: all 0.15s; font-size: 15px;
+  }
+  .send-btn:hover { filter: brightness(1.15); transform: scale(1.05); }
+  .send-btn:disabled { background: var(--border2); cursor: not-allowed; transform: none; }
+  .input-hint { font-size: 10px; color: var(--text3); margin-top: 7px; font-family: 'DM Mono', monospace; }
+
+  /* Error toast */
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--red-a15); border: 1px solid var(--red-a30);
+    color: var(--red); padding: 12px 18px; border-radius: 10px;
+    font-size: 13px; max-width: 340px; z-index: 999;
+    animation: fadeSlideUp 0.3s ease;
+    display: none;
+  }
+
+  /* Scrollbar */
+  .left-panel::-webkit-scrollbar { width: 3px; }
+  .left-panel::-webkit-scrollbar-thumb { background: var(--border2); }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .left-panel { width: 280px; min-width: 280px; }
+  }
+  @media (max-width: 680px) {
+    .main { flex-direction: column; }
+    .left-panel { width: 100%; min-width: unset; height: auto; max-height: 260px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <div class="logo-mark">IQ</div>
+      <div>
+        <div class="logo-name">Inven<span>IQ</span></div>
+        <div class="logo-tag">Inventory Intelligence Platform</div>
+      </div>
+    </div>
+    <div class="theme-switcher">
+      <button class="theme-toggle-btn" onclick="toggleThemeDropdown()" title="Change theme">
+        <span id="themeIcon">🎨</span> <span id="themeLabel">Dark</span>
+      </button>
+      <div class="theme-dropdown" id="themeDropdown">
+        <button class="theme-option active" data-theme="dark" onclick="setTheme('dark')">
+          <span class="theme-dot" style="background:#00d4ff"></span> Dark
+        </button>
+        <button class="theme-option" data-theme="ocean" onclick="setTheme('ocean')">
+          <span class="theme-dot" style="background:#4dc9f6"></span> Ocean
+        </button>
+        <button class="theme-option" data-theme="forest" onclick="setTheme('forest')">
+          <span class="theme-dot" style="background:#4ae08a"></span> Forest
+        </button>
+        <button class="theme-option" data-theme="sunset" onclick="setTheme('sunset')">
+          <span class="theme-dot" style="background:#ff8a50"></span> Sunset
+        </button>
+        <button class="theme-option" data-theme="lavender" onclick="setTheme('lavender')">
+          <span class="theme-dot" style="background:#a78bfa"></span> Lavender
+        </button>
+        <button class="theme-option" data-theme="cherry" onclick="setTheme('cherry')">
+          <span class="theme-dot" style="background:#f43f6e"></span> Cherry
+        </button>
+        <button class="theme-option" data-theme="light" onclick="setTheme('light')">
+          <span class="theme-dot" style="background:#ffffff;border:1.5px solid #cbd5e0"></span> Light
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="main">
+
+    <!-- Left Panel -->
+    <div class="left-panel">
+
+      <!-- CSV Upload -->
+      <div class="panel-section">
+        <div class="section-label">📂 Inventory Data · Images</div>
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="csvFile" accept=".csv,.png,.jpg,.jpeg,.gif,.webp,.bmp,.svg" multiple>
+          <div class="upload-icon">📊</div>
+          <div class="upload-title">Drop CSV or image files here</div>
+          <div class="upload-sub">CSV for tabular data · Images for visual/text extraction</div>
+        </div>
+        <div class="csv-file-list" id="csvFileList"></div>
+        <div class="csv-preview" id="csvPreview">
+          <div class="csv-preview-header">
+            <span id="csvFileName">—</span>
+            <span id="csvRowCount">—</span>
+          </div>
+          <div class="csv-table" id="csvTableWrap"></div>
+        </div>
+        <div class="img-file-list" id="imgFileList"></div>
+        <div class="img-preview" id="imgPreview">
+          <div class="img-preview-header">
+            <span id="imgFileName">—</span>
+            <span>image</span>
+          </div>
+          <img id="imgPreviewSrc" src="" alt="preview">
+        </div>
+      </div>
+
+      <!-- External Signals -->
+      <div class="panel-section">
+        <div class="section-label">🌐 External Signals</div>
+
+        <div class="signal-group">
+          <div class="signal-header">
+            <div class="signal-header-left"><span>📅</span> Calendar / Events</div>
+            <button class="signal-fetch" id="fetchCalendar" onclick="fetchSignal('calendar', 'sigCalendar', 'fetchCalendar')">
+              <span class="sf-icon">🔍</span><span class="sf-spinner">⏳</span> Fetch
+            </button>
+          </div>
+          <textarea class="signal-input" id="sigCalendar" placeholder="e.g. Labour Day May 1, Hari Raya next week…"></textarea>
+        </div>
+
+        <div class="signal-group">
+          <div class="signal-header">
+            <div class="signal-header-left"><span>🌦️</span> Weather Outlook</div>
+            <button class="signal-fetch" id="fetchWeather" onclick="fetchSignal('weather', 'sigWeather', 'fetchWeather')">
+              <span class="sf-icon">🔍</span><span class="sf-spinner">⏳</span> Fetch
+            </button>
+          </div>
+          <input class="signal-input" id="sigWeather" type="text" placeholder="e.g. Heavy rain forecast next 5 days…">
+        </div>
+
+        <div class="signal-group">
+          <div class="signal-header">
+            <div class="signal-header-left"><span>📰</span> News / Market</div>
+            <button class="signal-fetch" id="fetchNews" onclick="fetchSignal('news', 'sigNews', 'fetchNews')">
+              <span class="sf-icon">🔍</span><span class="sf-spinner">⏳</span> Fetch
+            </button>
+          </div>
+          <textarea class="signal-input" id="sigNews" placeholder="e.g. Sugar price hike announced, fuel subsidy removed…"></textarea>
+        </div>
+
+        <div class="signal-group">
+          <div class="signal-header">
+            <div class="signal-header-left"><span>💬</span> Raw / Unstructured</div>
+            <button class="signal-fetch" id="fetchRaw" onclick="fetchSignal('raw', 'sigRaw', 'fetchRaw')">
+              <span class="sf-icon">💡</span><span class="sf-spinner">⏳</span> Suggest
+            </button>
+          </div>
+          <textarea class="signal-input" id="sigRaw" placeholder="Paste WhatsApp msgs, voice note transcripts, emails…"></textarea>
+        </div>
+      </div>
+
+      <!-- Quick Queries -->
+      <div class="panel-section">
+        <div class="section-label">⚡ Quick Queries</div>
+        <div class="quick-btns">
+          <button class="quick-btn" onclick="quickQuery('What will my inventory level be next month?')">
+            <span class="qb-icon">📈</span> Next month inventory forecast
+          </button>
+          <button class="quick-btn" onclick="quickQuery('Which items need restocking urgently?')">
+            <span class="qb-icon">🚨</span> Urgent restock alerts
+          </button>
+          <button class="quick-btn" onclick="quickQuery('Which products should I discount to clear excess stock?')">
+            <span class="qb-icon">🏷️</span> Items to discount
+          </button>
+          <button class="quick-btn" onclick="quickQuery('Give me a full inventory health summary')">
+            <span class="qb-icon">🩺</span> Full health summary
+          </button>
+          <button class="quick-btn" onclick="quickQuery('What is my best selling product and how should I manage it?')">
+            <span class="qb-icon">⭐</span> Best seller analysis
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Chat Area -->
+    <div class="chat-area">
+
+      <div class="chat-header">
+        <div>
+          <div class="chat-title">AI Inventory Advisor</div>
+          <div class="chat-sub">Ask anything about your stock, forecasts & decisions</div>
+        </div>
+        <div class="model-badge">GLM-4 Flash · Agentic</div>
+      </div>
+
+      <div class="messages" id="messages">
+        <div class="welcome-card">
+          <div class="wc-icon">🤖</div>
+          <h2>Your Inventory Intelligence Agent</h2>
+          <p>Upload your CSV or images on the left, add any external signals (weather, events, news), then ask me anything about your inventory. I can read text, charts, and tables from images too.</p>
+          <div class="welcome-chips">
+            <div class="welcome-chip" onclick="quickQuery('What will my inventory level be next month?')">📈 Forecast next month</div>
+            <div class="welcome-chip" onclick="quickQuery('Which items need restocking urgently?')">🚨 Urgent restocks</div>
+            <div class="welcome-chip" onclick="quickQuery('Give me a full inventory health summary')">🩺 Health summary</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-bar">
+        <div class="attachment-row" id="attachmentRow"></div>
+        <input type="file" id="chatFileInput" multiple style="display:none">
+        <div class="input-row">
+          <button class="attach-btn" id="attachBtn" onclick="document.getElementById('chatFileInput').click()" title="Attach files">📎</button>
+          <textarea id="userInput" rows="1" placeholder="Ask about your inventory… or attach files 📎" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+          <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="Send">➤</button>
+        </div>
+        <div class="input-hint">Enter to send · Shift+Enter newline · Ctrl+V paste images/files · 📎 Attach files</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+// CONFIG
+// ─────────────────────────────────────────────────────────────────────────────
+
+const API_URL = "http://127.0.0.1:8000/chat";
+const MODEL     = 'ilmu-glm-5.1';
+
+// ─────────────────────────────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────────────────────────────
+let csvFiles   = [];     // Array of { name, headers, data, raw, summary }
+let imageFiles = [];     // Array of { name, dataUrl, mediaType }
+let attachments = [];    // Array of { name, type, content, icon }
+let isLoading  = false;
+let chatHistory = [];
+
+// File type helpers
+function fileIcon(name) {
+  const ext = name.split('.').pop().toLowerCase();
+  const map = { csv:'📊', xlsx:'📊', xls:'📊', pdf:'📄', doc:'📝', docx:'📝',
+    txt:'📝', md:'📝', json:'🔧', xml:'🔧', html:'🌐', png:'🖼️', jpg:'🖼️',
+    jpeg:'🖼️', gif:'🖼️', webp:'🖼️', svg:'🖼️', mp3:'🎵', wav:'🎵', mp4:'🎬' };
+  return map[ext] || '📎';
+}
+
+function isTextFile(name) {
+  const ext = name.split('.').pop().toLowerCase();
+  return ['csv','txt','md','json','xml','html','htm','css','js','ts','py','java',
+    'c','cpp','h','log','yaml','yml','toml','ini','cfg','env','sh','bat','sql',
+    'jsx','tsx','vue','svelte','rb','go','rs','swift','kt'].includes(ext);
+}
+
+function isImageFile(name) {
+  const ext = name.split('.').pop().toLowerCase();
+  return ['png','jpg','jpeg','gif','webp','svg','bmp'].includes(ext);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CHAT FILE ATTACHMENTS
+// ─────────────────────────────────────────────────────────────────────────────
+const chatFileInput = document.getElementById('chatFileInput');
+
+chatFileInput.addEventListener('change', e => {
+  Array.from(e.target.files).forEach(f => processAttachment(f));
+  chatFileInput.value = '';
+});
+
+// Also allow drag-and-drop onto chat area
+const chatArea = document.querySelector('.chat-area');
+chatArea.addEventListener('dragover', e => { e.preventDefault(); });
+chatArea.addEventListener('drop', e => {
+  e.preventDefault();
+  Array.from(e.dataTransfer.files).forEach(f => processAttachment(f));
+});
+
+// Paste images or files from clipboard into the input bar
+const userInput = document.getElementById('userInput');
+userInput.addEventListener('paste', e => {
+  const items = e.clipboardData?.items;
+  if (!items) return;
+
+  for (const item of items) {
+    // Pasted image (screenshot, copied image, etc.)
+    if (item.type.startsWith('image/')) {
+      e.preventDefault();
+      const blob = item.getAsFile();
+      if (blob) {
+        const ext = item.type.split('/')[1] || 'png';
+        const file = new File([blob], `pasted-image.${ext}`, { type: item.type });
+        processAttachment(file);
+      }
+      return;
+    }
+  }
+
+  // Check for pasted files (some browsers support clipboard files)
+  const files = e.clipboardData?.files;
+  if (files && files.length > 0) {
+    let hasFile = false;
+    for (const f of files) {
+      if (!f.type.startsWith('image/')) {
+        hasFile = true;
+        e.preventDefault();
+        processAttachment(f);
+      }
+    }
+    if (hasFile) return;
+  }
+});
+
+function processAttachment(file) {
+  const icon = fileIcon(file.name);
+  const isText = isTextFile(file.name);
+  const isImage = isImageFile(file.name);
+
+  if (isText || file.name.endsWith('.csv')) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      let content = e.target.result;
+      if (content.length > 15000) content = content.slice(0, 15000) + '\n... [truncated]';
+      attachments.push({ name: file.name, type: 'text', content, icon });
+
+      // Also handle CSV files for the inventory panel
+      if (file.name.endsWith('.csv')) {
+        processCSV(file);
+      }
+      renderAttachments();
+    };
+    reader.readAsText(file);
+  } else if (isImage) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      attachments.push({ name: file.name, type: 'image', content: e.target.result, icon });
+      renderAttachments();
+    };
+    reader.readAsDataURL(file);
+  } else {
+    // Non-readable files: just note the filename and size
+    const sizeKB = (file.size / 1024).toFixed(1);
+    attachments.push({ name: file.name, type: 'binary', content: `[File: ${file.name}, Size: ${sizeKB} KB — content not readable as text]`, icon });
+    renderAttachments();
+  }
+}
+
+function renderAttachments() {
+  const row = document.getElementById('attachmentRow');
+  row.innerHTML = attachments.map((a, i) => `
+    <div class="att-chip">
+      ${a.type === 'image' ? `<img src="${a.content}" class="att-thumb">` : `<span class="att-icon">${a.icon}</span>`}
+      <span class="att-name">${escHtml(a.name)}</span>
+      <button class="att-remove" onclick="removeAttachment(${i})" title="Remove">✕</button>
+    </div>`).join('');
+}
+
+function removeAttachment(idx) {
+  attachments.splice(idx, 1);
+  renderAttachments();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SIGNAL FETCH (auto-fill from web search, CSV-aware)
+// ─────────────────────────────────────────────────────────────────────────────
+function extractCSVContext() {
+  // Pull unique categories and top product names from all loaded CSV files
+  const categories = new Set();
+  const products = [];
+
+  for (const f of csvFiles) {
+    const catIdx = f.headers.findIndex(h =>
+      /categor/i.test(h) && !/id/i.test(h)
+    );
+    const prodIdx = f.headers.findIndex(h =>
+      /product\b/i.test(h) && !/id/i.test(h) || /item\s*name/i.test(h) || /sku\s*name/i.test(h)
+    );
+
+    for (const row of f.data) {
+      if (catIdx !== -1 && row[catIdx]) categories.add(row[catIdx].trim());
+      if (prodIdx !== -1 && row[prodIdx] && products.length < 5) {
+        const name = row[prodIdx].trim();
+        if (name && !products.includes(name)) products.push(name);
+      }
+    }
+  }
+
+  const parts = [];
+  if (categories.size > 0) parts.push([...categories].slice(0, 5).join(', '));
+  if (products.length > 0) parts.push(products.join(', '));
+  return parts.join(' ');
+}
+
+async function fetchSignal(category, inputId, btnId) {
+  const btn = document.getElementById(btnId);
+  const input = document.getElementById(inputId);
+
+  if (btn.classList.contains('loading')) return;
+
+  btn.classList.add('loading');
+  input.placeholder = 'Searching… this may take a few seconds';
+
+  // Derive context from loaded CSV data
+  const context = extractCSVContext();
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 30000); // 30s timeout
+
+  try {
+    const res = await fetch('http://127.0.0.1:8000/search-signal', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ category, context }),
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeout);
+
+    if (!res.ok) throw new Error(`API error ${res.status}`);
+
+    const data = await res.json();
+    const isSearchError = data.results && data.results.startsWith('Search error');
+    const isNoResults = data.results && (data.results.startsWith('No results') || data.results.trim() === '');
+
+    if (data.results && !isSearchError && !isNoResults) {
+      // Always override previous fetch results
+      input.value = data.results;
+      showToast(`✅ Fetched ${category} signals`, 'green');
+    } else if (isNoResults) {
+      // Retry once automatically after a short delay
+      showToast(`Retrying ${category} search…`, 'amber');
+      await sleep(2000);
+      try {
+        const retryRes = await fetch('http://127.0.0.1:8000/search-signal', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ category, context }),
+        });
+        const retryData = await retryRes.json();
+        const retryNoError = !retryData.results?.startsWith('Search error') && !retryData.results?.startsWith('No results');
+        if (retryData.results && retryNoError && retryData.results.trim()) {
+          // Always override previous fetch results
+          input.value = retryData.results;
+          showToast(`✅ Fetched ${category} signals`, 'green');
+        } else {
+          showToast(`${category}: Search services are busy — try again in a moment`, 'amber');
+        }
+      } catch {
+        showToast(`${category}: Could not reach server on retry`, 'amber');
+      }
+    } else {
+      showToast(`${category}: Could not fetch data — try again`, 'amber');
+    }
+  } catch (err) {
+    clearTimeout(timeout);
+    if (err.name === 'AbortError') {
+      showToast(`${category}: Search timed out — try again`, 'amber');
+    } else {
+      showToast(`${category}: Fetch failed — is the backend running?`, 'amber');
+    }
+  }
+
+  btn.classList.remove('loading');
+  input.placeholder = {
+    calendar: 'e.g. Labour Day May 1, Hari Raya next week…',
+    weather: 'e.g. Heavy rain forecast next 5 days…',
+    news: 'e.g. Sugar price hike announced, fuel subsidy removed…',
+    raw: 'Paste WhatsApp msgs, voice note transcripts, emails…',
+  }[category] || '';
+}
+
+// 🧠 The Pre-Processor
+function generateDataSummary(csvText) {
+    try {
+        const rows = csvText.trim().split('\n');
+        if (rows.length < 2) return "";
+        const headers = rows[0].split(',');
+        const productIdx = headers.findIndex(h => h.toLowerCase().includes('product id') || h.toLowerCase().includes('product'));
+        const salesIdx = headers.findIndex(h => h.toLowerCase().includes('units sold') || h.toLowerCase().includes('sales'));
+
+        if (productIdx === -1 || salesIdx === -1) return "";
+
+        const productSales = {};
+        for (let i = 1; i < rows.length; i++) {
+            const cols = rows[i].split(',');
+            if (cols.length <= productIdx || cols.length <= salesIdx) continue;
+            const productId = cols[productIdx].trim();
+            const sales = parseFloat(cols[salesIdx].trim()) || 0;
+            if (!productSales[productId]) productSales[productId] = 0;
+            productSales[productId] += sales;
+        }
+
+        const sorted = Object.keys(productSales).map(id => ({ id, sales: productSales[id] })).sort((a, b) => b.sales - a.sales);
+        const top5 = sorted.slice(0, 5).map(p => `${p.id} (${p.sales} units)`).join(', ');
+        const bottom5 = sorted.slice(-5).reverse().map(p => `${p.id} (${p.sales} units)`).join(', ');
+
+        return `\n=== PRE-COMPUTED DATA SNAPSHOT ===\nTop 5 Best-Selling Products: ${top5}\nBottom 5 Worst-Selling Products: ${bottom5}\nTotal Unique Products: ${sorted.length}\n==================================\n`;
+    } catch (e) {
+        return "";
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CSV UPLOAD (multiple files)
+// ─────────────────────────────────────────────────────────────────────────────
+let activeFileIdx = 0;
+const uploadZone = document.getElementById('uploadZone');
+const csvFileInput = document.getElementById('csvFile');
+
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault(); uploadZone.classList.remove('drag-over');
+  Array.from(e.dataTransfer.files).forEach(f => {
+    if (f.name.endsWith('.csv')) processCSV(f);
+    else if (isImageFile(f.name)) processImage(f);
+  });
+});
+csvFileInput.addEventListener('change', e => {
+  Array.from(e.target.files).forEach(f => {
+    if (f.name.endsWith('.csv')) processCSV(f);
+    else if (isImageFile(f.name)) processImage(f);
+  });
+  csvFileInput.value = '';
+});
+
+function processCSV(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    const text = e.target.result;
+    const lines = text.trim().split('\n').filter(l => l.trim());
+    if (lines.length < 2) { showToast('CSV must have at least a header row and one data row.'); return; }
+
+    const headers = parseCSVLine(lines[0]);
+    const data = lines.slice(1).map(l => parseCSVLine(l));
+    const raw = lines.slice(0, 30).join('\n');
+    const summary = generateDataSummary(text);
+
+    csvFiles.push({ name: file.name, headers, data, raw, summary });
+    activeFileIdx = csvFiles.length - 1;
+
+    renderFileList();
+    renderCSVPreview(csvFiles[activeFileIdx]);
+    updateUploadZone();
+    showToast(`✅ Loaded "${file.name}" — ${data.length} rows`, 'green');
+
+    chatHistory = [];
+
+    const allCols = [...new Set(csvFiles.flatMap(f => f.headers))];
+    const totalRows = csvFiles.reduce((s, f) => s + f.data.length, 0);
+    addAssistantMessage(buildPlainMsg(
+      `📊 CSV loaded: **${file.name}** (${data.length} rows)\n\n` +
+      `You now have **${csvFiles.length} file${csvFiles.length > 1 ? 's' : ''}** loaded with **${totalRows} total rows**.\n\n` +
+      `Columns: ${headers.map(h=>`\`${h}\``).join(', ')}\n\n` +
+      `What would you like to know?`
+    ));
+  };
+  reader.readAsText(file);
+}
+
+function updateUploadZone() {
+  const totalRows = csvFiles.reduce((s, f) => s + f.data.length, 0);
+  const hasData = csvFiles.length > 0 || imageFiles.length > 0;
+  uploadZone.querySelector('.upload-icon').textContent = hasData ? '✅' : '📊';
+  uploadZone.querySelector('.upload-title').textContent = hasData
+    ? `${csvFiles.length} CSV${csvFiles.length !== 1 ? 's' : ''} · ${imageFiles.length} image${imageFiles.length !== 1 ? 's' : ''} loaded`
+    : 'Drop CSV or image files here';
+  const sub = uploadZone.querySelector('.upload-sub');
+  if (hasData) {
+    const parts = [];
+    if (csvFiles.length > 0) parts.push(`${totalRows} total rows`);
+    if (imageFiles.length > 0) parts.push(`${imageFiles.length} image${imageFiles.length > 1 ? 's' : ''}`);
+    sub.textContent = parts.join(' · ') + ' · drop more to add';
+    sub.style.color = 'var(--green)';
+  } else {
+    sub.textContent = 'CSV for tabular data · Images for visual/text extraction';
+    sub.style.color = '';
+  }
+}
+
+// ── IMAGE PROCESSING (left panel) ──
+let activeImgIdx = 0;
+
+function processImage(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    const dataUrl = e.target.result;
+    const ext = file.name.split('.').pop().toLowerCase();
+    const mediaType = ext === 'png' ? 'image/png'
+      : ext === 'gif' ? 'image/gif'
+      : ext === 'webp' ? 'image/webp'
+      : ext === 'svg' ? 'image/svg+xml'
+      : 'image/jpeg';
+
+    imageFiles.push({ name: file.name, dataUrl, mediaType });
+    activeImgIdx = imageFiles.length - 1;
+
+    renderImageList();
+    renderImagePreview(imageFiles[activeImgIdx]);
+    updateUploadZone();
+    showToast(`🖼️ Loaded "${file.name}" — ready for visual extraction`, 'green');
+
+    chatHistory = [];
+    addAssistantMessage(buildPlainMsg(
+      `🖼️ Image loaded: **${file.name}**\n\n` +
+      `I can now analyse this image — extract text, read charts/tables, identify products, or interpret any visual data in it.\n\n` +
+      `Try asking: "What data can you extract from this image?" or "Read the table in this image"`
+    ));
+  };
+  reader.readAsDataURL(file);
+}
+
+function renderImageList() {
+  const list = document.getElementById('imgFileList');
+  list.innerHTML = imageFiles.map((f, i) => `
+    <div class="img-file-item" onclick="selectImage(${i})">
+      <img src="${f.dataUrl}" class="ifi-thumb" alt="${escHtml(f.name)}">
+      <span class="ifi-name">🖼️ ${escHtml(f.name)}</span>
+      <button class="ifi-remove" onclick="event.stopPropagation(); removeImage(${i})" title="Remove">✕</button>
+    </div>`).join('');
+}
+
+function selectImage(idx) {
+  activeImgIdx = idx;
+  renderImageList();
+  renderImagePreview(imageFiles[idx]);
+}
+
+function removeImage(idx) {
+  imageFiles.splice(idx, 1);
+  if (activeImgIdx >= imageFiles.length) activeImgIdx = Math.max(0, imageFiles.length - 1);
+  renderImageList();
+  updateUploadZone();
+  if (imageFiles.length > 0) {
+    renderImagePreview(imageFiles[activeImgIdx]);
+  } else {
+    document.getElementById('imgPreview').classList.remove('show');
+  }
+}
+
+function renderImagePreview(file) {
+  document.getElementById('imgFileName').textContent = file.name;
+  document.getElementById('imgPreviewSrc').src = file.dataUrl;
+  document.getElementById('imgPreview').classList.add('show');
+}
+
+function renderFileList() {
+  const list = document.getElementById('csvFileList');
+  list.innerHTML = csvFiles.map((f, i) => `
+    <div class="csv-file-item ${i === activeFileIdx ? 'active' : ''}" onclick="selectFile(${i})">
+      <span class="fi-name">📄 ${escHtml(f.name)}</span>
+      <span class="fi-rows">${f.data.length} rows</span>
+      <button class="fi-remove" onclick="event.stopPropagation(); removeFile(${i})" title="Remove">✕</button>
+    </div>`).join('');
+}
+
+function selectFile(idx) {
+  activeFileIdx = idx;
+  renderFileList();
+  renderCSVPreview(csvFiles[idx]);
+}
+
+function removeFile(idx) {
+  csvFiles.splice(idx, 1);
+  if (activeFileIdx >= csvFiles.length) activeFileIdx = Math.max(0, csvFiles.length - 1);
+  renderFileList();
+  updateUploadZone();
+  if (csvFiles.length > 0) {
+    renderCSVPreview(csvFiles[activeFileIdx]);
+  } else {
+    document.getElementById('csvPreview').classList.remove('show');
+  }
+}
+
+function parseCSVLine(line) {
+  const result = []; let cur = ''; let inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (c === '"') { inQ = !inQ; }
+    else if (c === ',' && !inQ) { result.push(cur.trim()); cur = ''; }
+    else { cur += c; }
+  }
+  result.push(cur.trim());
+  return result;
+}
+
+function renderCSVPreview(file) {
+  const preview = document.getElementById('csvPreview');
+  document.getElementById('csvFileName').textContent = file.name;
+  document.getElementById('csvRowCount').textContent = `${file.data.length} rows`;
+
+  let html = '<table><thead><tr>';
+  file.headers.slice(0, 6).forEach(h => html += `<th>${h}</th>`);
+  if (file.headers.length > 6) html += `<th>+${file.headers.length - 6} more</th>`;
+  html += '</tr></thead><tbody>';
+  file.data.slice(0, 5).forEach(row => {
+    html += '<tr>';
+    row.slice(0, 6).forEach(cell => html += `<td>${cell || '—'}</td>`);
+    if (row.length > 6) html += '<td>…</td>';
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+
+  document.getElementById('csvTableWrap').innerHTML = html;
+  preview.classList.add('show');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AGENTIC SYSTEM PROMPT
+// ─────────────────────────────────────────────────────────────────────────────
+function buildSystemPrompt() {
+  const today = new Date().toLocaleDateString('en-MY', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+  const cal    = document.getElementById('sigCalendar').value.trim();
+  const weather= document.getElementById('sigWeather').value.trim();
+  const news   = document.getElementById('sigNews').value.trim();
+  const raw    = document.getElementById('sigRaw').value.trim();
+
+  const signalsBlock = [
+    cal     && `CALENDAR/EVENTS:\n${cal}`,
+    weather && `WEATHER OUTLOOK:\n${weather}`,
+    news    && `NEWS/MARKET SIGNALS:\n${news}`,
+    raw     && `RAW/UNSTRUCTURED SIGNALS:\n${raw}`,
+  ].filter(Boolean).join('\n\n');
+
+  const csvBlock = csvFiles.length > 0
+    ? csvFiles.map((f, i) =>
+        `\n\n--- CSV FILE ${i + 1}: ${f.name} ---\nINVENTORY CSV DATA (first 30 rows):\n\`\`\`\n${f.raw}\n\`\`\`${f.summary}`
+      ).join('\n')
+    : '\n\n(No CSV uploaded yet — answer based on general inventory principles and the signals provided.)';
+
+  const attachBlock = attachments.length > 0
+    ? '\n\nUSER-ATTACHED FILES:\n' + attachments.map((a, i) =>
+        a.type === 'image'
+          ? `--- FILE ${i + 1}: ${a.name} (image) ---\n[Image is provided as a vision attachment — examine it carefully and extract any text, data, charts, or visual information relevant to the question.]\n`
+          : `--- FILE ${i + 1}: ${a.name} (${a.type}) ---\n${a.content}\n`
+      ).join('\n')
+    : '';
+
+  const imageBlock = imageFiles.length > 0
+    ? '\n\nUPLOADED IMAGES (vision data — extract information from these):\n' + imageFiles.map((f, i) =>
+        `--- IMAGE ${i + 1}: ${f.name} ---\n[This image has been uploaded for analysis. Examine it carefully: extract any visible text, tables, charts, product labels, price tags, barcodes, handwritten notes, or other data. Use extracted information as inventory context.]\n`
+      ).join('\n')
+    : '';
+
+  return `You are InvenIQ, an elite agentic AI inventory advisor for Malaysian SME retail stores.
+Today is ${today}.
+
+YOUR JOB:
+Analyse the user's inventory data and external signals to give DIRECT, SPECIFIC, ACTIONABLE answers.
+Never be vague. Always give EXACT projected numbers, specific item names, and concrete next steps with timing.
+
+RESPONSE RULES (follow strictly every time):
+1. Start with a ONE-SENTENCE direct answer to the question. Example: "Your total inventory is projected to drop to 420 units by next month."
+2. Show KEY METRICS as a mini dashboard (use [METRICS] block).
+3. Give a FORECAST or ANALYSIS section with specific numbers from the data.
+4. Give a RECOMMENDED ACTION — what to do, how much, and WHEN (tomorrow / this week / by [date]).
+5. List SIGNALS USED — which external signals influenced your answer.
+6. End with a PLAIN ENGLISH SUMMARY — 2 sentences, simple enough for a shop owner.
+
+SIGNAL ANALYSIS RULES:
+- If weather signals mention rain/storm → expect higher demand for comfort foods, hot drinks; lower foot traffic
+- If calendar mentions public holidays → expect demand spikes 2–3 days before and after
+- If news mentions price changes → adjust reorder urgency accordingly
+- Always factor raw/unstructured signals into your reasoning
+- CRITICAL: You MUST cross-reference signals with inventory data. For example: if weather shows rain AND a product category in the CSV is "beverages", specifically mention how rain affects that category's sales. Never treat signals and CSV data in isolation.
+
+IMAGE/VISION ANALYSIS RULES:
+- When images are provided, examine them thoroughly for any inventory-relevant data
+- Extract text from labels, price tags, receipts, invoices, handwritten notes
+- Read data from charts, graphs, and tables shown in images
+- Identify product names, quantities, SKUs, barcodes visible in images
+- If an image contains a spreadsheet or table screenshot, parse it as data
+- Combine extracted image data with CSV data and signals for a complete answer
+
+FORMAT YOUR RESPONSE AS JSON (this is critical — the UI renders it):
+{
+  "direct_answer": "One sentence direct answer here",
+  "metrics": [
+    {"label": "Current Stock", "value": "XX units", "status": "green|amber|red|blue"},
+    {"label": "Projected Next Month", "value": "XX units", "status": "green|amber|red|blue"}
+  ],
+  "forecast": {
+    "next_week": "XX units expected to sell next week",
+    "next_month": "XX units projected stock remaining",
+    "trend": "rising|stable|declining",
+    "confidence": "high|medium|low",
+    "reasoning": "2–3 sentence explanation mentioning specific signals"
+  },
+  "action": {
+    "type": "reorder|discount|monitor|none",
+    "title": "Short action title",
+    "what": "Specific item names and quantities",
+    "when": "Tomorrow / This week / By [date]",
+    "why": "One sentence reason"
+  },
+  "signals_used": [
+    {"type": "calendar|weather|news|other", "text": "signal text"}
+  ],
+  "factors": [
+    {"label": "Factor name", "direction": "pos|neg|neu", "note": "brief explanation"}
+  ],
+  "summary": "Plain English 2-sentence summary for a shop owner."
+}
+
+If no CSV is uploaded, still answer based on the query and signals, using general inventory principles.
+
+CRITICAL JSON RULES:
+1. Output ONLY perfectly valid JSON.
+- EXCEPTION: If the user explicitly asks you to draft an email, write a message, or write freeform text, you MUST IGNORE the JSON format completely and just reply with the normal plain text.
+2. NO trailing commas anywhere (e.g., [1, 2,] is forbidden).
+3. NO literal line breaks inside strings (you must use \\n instead).
+4. Escape all double quotes inside strings.
+5. Do NOT output markdown code blocks (like \`\`\`json). Start directly with { and end with }.
+6. MAX LENGTH: You have an absolute maximum output limit of 8192 tokens. 
+7. CONCISENESS & FLOW: You must be highly concise. Limit the "reasoning", "action", and "summary" fields to 2-3 short, punchy sentences max.
+8. ANTI-HALLUCINATION: NEVER invent, guess, or make up product names or brands. You MUST ONLY use the exact "Product ID" (e.g., P0001) or "Category" explicitly shown in the uploaded CSV data or the PRE-COMPUTED DATA SNAPSHOT. If you don't know the exact name, refer to it by its Category.
+
+${csvBlock}
+
+${imageBlock}
+
+${attachBlock}
+
+${signalsBlock ? `EXTERNAL SIGNALS PROVIDED:\n${signalsBlock}` : '(No external signals provided — answer based on inventory data only.)'}`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SEND MESSAGE
+// ─────────────────────────────────────────────────────────────────────────────
+async function sendMessage() {
+  const input = document.getElementById('userInput');
+  const query = input.value.trim();
+  if ((!query && attachments.length === 0) || isLoading) return;
+
+  // Build the display message
+  let displayText = query;
+  if (attachments.length > 0 && query) {
+    displayText = query + '\n\n' + attachments.map(a => `${a.icon} ${a.name}`).join(' · ');
+  } else if (attachments.length > 0 && !query) {
+    displayText = attachments.map(a => `${a.icon} ${a.name}`).join(' · ');
+  }
+
+  input.value = ''; autoResize(input);
+
+  // Consume attachments for this message, then clear
+  const msgAttachments = [...attachments];
+  attachments = [];
+  renderAttachments();
+
+  const imageAttachments = msgAttachments.filter(a => a.type === 'image');
+  addUserMessage(displayText, imageAttachments);
+  await runAgentic(query || 'Please analyse the attached file(s).', msgAttachments);
+}
+
+function quickQuery(q) {
+  document.getElementById('userInput').value = q;
+  sendMessage();
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AGENTIC PIPELINE
+// ─────────────────────────────────────────────────────────────────────────────
+async function runAgentic(query, msgAttachments = []) {
+  isLoading = true;
+  document.getElementById('sendBtn').disabled = true;
+
+  // Temporarily set attachments so buildSystemPrompt includes them
+  const savedAttachments = [...attachments];
+  attachments = msgAttachments;
+
+  // Build user message — include both chat-attached images and left-panel images as vision blocks
+  const imageAttachments = msgAttachments.filter(a => a.type === 'image');
+
+  // Combine chat attachments + left-panel images (deduplicate by name)
+  const allImages = [...imageAttachments];
+  const chatNames = new Set(imageAttachments.map(a => a.name));
+  for (const img of imageFiles) {
+    if (!chatNames.has(img.name)) {
+      allImages.push({ name: img.name, type: 'image', content: img.dataUrl, icon: '🖼️' });
+    }
+  }
+
+  let userContent;
+  if (allImages.length > 0) {
+    // Multimodal: text + image blocks
+    userContent = [
+      { type: 'text', text: query },
+      ...allImages.map(a => {
+        const ext = a.name.split('.').pop().toLowerCase();
+        const mediaType = ext === 'png' ? 'image/png'
+          : ext === 'gif' ? 'image/gif'
+          : ext === 'webp' ? 'image/webp'
+          : ext === 'svg' ? 'image/svg+xml'
+          : 'image/jpeg';
+        return {
+          type: 'image',
+          source: {
+            type: 'base64',
+            media_type: mediaType,
+            data: a.content.split(',')[1]  // strip the data:image/...;base64, prefix
+          }
+        };
+      })
+    ];
+  } else {
+    userContent = query;
+  }
+
+  // Add user message to history (as plain text for context continuity)
+  chatHistory.push({ role: 'user', content: query });
+
+  // Show thinking indicator
+  const thinkId = addThinkingIndicator();
+
+  try {
+    const steps = [
+      '🔍 Parsing inventory data & images…',
+      '🌐 Analysing external signals…',
+      '🖼️ Extracting visual information…',
+      '🧠 Generating forecast model…',
+      '⚡ Synthesising decision…',
+    ];
+    for (let i = 0; i < steps.length; i++) {
+      await sleep(400);
+      updateThinkingStep(thinkId, steps[i]);
+    }
+
+    const systemPrompt = buildSystemPrompt();
+
+    // Restore attachments after prompt is built
+    attachments = savedAttachments;
+
+    const messages = [
+      { role: 'system', content: systemPrompt },
+      // All previous history as plain text
+      ...chatHistory.slice(0, -1),
+      // Current user message with possible image content
+      { role: 'user', content: userContent },
+    ];
+
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        messages,
+        temperature: 0.1,
+        max_tokens: 8196,
+      }),
+    });
+
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`API error ${res.status}: ${err}`);
+    }
+
+    const data = await res.json();
+    const rawContent = data.content || '';
+
+    // Add assistant reply to history (raw, for context)
+    chatHistory.push({ role: 'assistant', content: rawContent });
+
+    // Keep history to last 10 turns (5 exchanges)
+    if (chatHistory.length > 10) chatHistory = chatHistory.slice(-10);
+
+    removeThinkingIndicator(thinkId);
+
+    // Try to parse as JSON for rich rendering
+    const parsed = tryParseJSON(rawContent);
+    if (parsed) {
+      addStructuredResponse(parsed);
+    } else {
+      addAssistantMessage(buildPlainMsg(rawContent));
+    }
+
+  } catch (err) {
+    removeThinkingIndicator(thinkId);
+    chatHistory.pop(); // remove failed user message from history
+    showToast('Error: ' + err.message);
+    addAssistantMessage(buildPlainMsg(`⚠️ Something went wrong: ${err.message}\n\nPlease check your connection and try again.`));
+  }
+
+  isLoading = false;
+  document.getElementById('sendBtn').disabled = false;
+  scrollToBottom();
+}
+
+function tryParseJSON(text) {
+  // Try direct parse
+  try { return JSON.parse(text.trim()); } catch {}
+  // Try extracting JSON block from markdown fences
+  const m = text.match(/```(?:json)?\s*([\s\S]+?)\s*```/);
+  if (m) { try { return JSON.parse(m[1]); } catch {} }
+  // Try finding first { ... }
+  const start = text.indexOf('{');
+  const end   = text.lastIndexOf('}');
+  if (start !== -1 && end !== -1) {
+    try { return JSON.parse(text.slice(start, end + 1)); } catch {}
+  }
+  return null;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MESSAGE RENDERERS
+// ─────────────────────────────────────────────────────────────────────────────
+function addUserMessage(text, imageAttachments = []) {
+  const msgs = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'msg user';
+
+  let imgHTML = '';
+  if (imageAttachments.length > 0) {
+    imgHTML = '<div class="msg-images">' +
+      imageAttachments.map(a => `<img src="${a.content}" alt="${escHtml(a.name)}" class="msg-image">`).join('') +
+      '</div>';
+  }
+
+  div.innerHTML = `
+    <div class="msg-avatar">👤</div>
+    <div class="msg-content">
+      ${imgHTML}
+      <div class="msg-bubble">${escHtml(text)}</div>
+    </div>`;
+  msgs.appendChild(div);
+  scrollToBottom();
+}
+
+function addAssistantMessage(html) {
+  const msgs = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'msg assistant';
+  div.innerHTML = `
+    <div class="msg-avatar">🤖</div>
+    <div class="msg-content">${html}</div>`;
+  msgs.appendChild(div);
+  scrollToBottom();
+}
+
+function buildPlainMsg(text) {
+  return `<div class="msg-bubble">${mdToHtml(text)}</div>`;
+}
+
+function addStructuredResponse(d) {
+  const trendIcon   = { rising: '📈', stable: '➡️', declining: '📉' }[d.forecast?.trend] || '➡️';
+  const actionColor = { reorder: 'reorder', discount: 'discount', monitor: 'none', none: 'none' }[d.action?.type] || 'none';
+  const actionEmoji = { reorder: '🛒', discount: '🏷️', monitor: '👁️', none: '✅' }[d.action?.type] || '✅';
+  const confColor   = { high: 'green', medium: 'amber', low: 'red' }[d.forecast?.confidence] || 'amber';
+
+  // Metrics
+  let metricsHTML = '';
+  if (d.metrics?.length) {
+    metricsHTML = `<div class="metric-row">` +
+      d.metrics.map(m => `
+        <div class="metric-card">
+          <div class="mc-label">${escHtml(m.label)}</div>
+          <div class="mc-value ${m.status || 'blue'}">${escHtml(m.value)}</div>
+        </div>`).join('') +
+      `</div>`;
+  }
+
+  // Factors
+  let factorsHTML = '';
+  if (d.factors?.length) {
+    factorsHTML = `
+      <div class="ans-block">
+        <div class="ans-label">Influencing Factors</div>
+        <div class="factor-list">
+          ${d.factors.map(f => `
+            <div class="factor-item">
+              <div class="factor-dot ${f.direction === 'pos' ? 'pos' : f.direction === 'neg' ? 'neg' : 'neu'}"></div>
+              <span><strong>${escHtml(f.label)}</strong> — ${escHtml(f.note)}</span>
+            </div>`).join('')}
+        </div>
+      </div>`;
+  }
+
+  // Signals used
+  let signalsHTML = '';
+  if (d.signals_used?.length) {
+    signalsHTML = `
+      <div class="ans-block">
+        <div class="ans-label">Signals Considered</div>
+        <div class="signals-used">
+          ${d.signals_used.map(s => `<span class="signal-tag ${s.type}">${escHtml(s.text)}</span>`).join('')}
+        </div>
+      </div>`;
+  }
+
+  // Collapsible detail sections
+  const hasDetails = d.forecast || d.action || d.factors?.length || d.signals_used?.length || d.summary;
+  const detailId = 'detail-' + Date.now();
+
+  const html = `
+    <div class="answer-card">
+      <div class="answer-header">
+        ⚡ InvenIQ Analysis &nbsp;·&nbsp; ${new Date().toLocaleTimeString('en-MY', {hour:'2-digit',minute:'2-digit'})}
+      </div>
+      <div class="answer-body">
+
+        <div class="ans-block">
+          <div class="ans-value" style="font-size:15px; font-weight:500; line-height:1.5; color:var(--text)">
+            ${escHtml(d.direct_answer || '—')}
+          </div>
+        </div>
+
+        ${metricsHTML}
+
+        ${hasDetails ? `
+        <div class="collapse-toggle" onclick="toggleDetail('${detailId}', this)">
+          <span class="ct-arrow">▶</span> See more details
+        </div>
+        <div class="collapse-body" id="${detailId}">
+
+          ${d.forecast ? `
+          <div class="ans-block" style="margin-top:12px">
+            <div class="ans-label">${trendIcon} Forecast</div>
+            <div class="ans-value" style="font-size:13px; color:var(--text2)">
+              <div style="margin-bottom:4px">📅 <strong>Next week:</strong> ${escHtml(d.forecast.next_week || '—')}</div>
+              <div style="margin-bottom:6px">🗓️ <strong>Next month:</strong> ${escHtml(d.forecast.next_month || '—')}</div>
+              <div style="padding:8px 10px; background:var(--surface2); border-radius:6px; font-size:12px; color:var(--text2); line-height:1.6">
+                ${escHtml(d.forecast.reasoning || '')}
+              </div>
+            </div>
+            <div style="margin-top:6px; display:flex; gap:8px; align-items:center">
+              <span class="signal-tag other">Confidence: ${(d.forecast.confidence||'medium').toUpperCase()}</span>
+              <span class="signal-tag ${d.forecast.trend === 'rising' ? 'calendar' : d.forecast.trend === 'declining' ? 'news' : 'other'}">
+                Trend: ${trendIcon} ${(d.forecast.trend||'stable').toUpperCase()}
+              </span>
+            </div>
+          </div>` : ''}
+
+          ${d.action ? `
+          <div class="ans-block">
+            <div class="ans-label">Recommended Action</div>
+            <div class="action-box ${actionColor}">
+              <div class="ab-title">${actionEmoji} ${escHtml(d.action.title || d.action.type)}</div>
+              <div class="ab-body">
+                ${d.action.what ? `<div><strong>What:</strong> ${escHtml(d.action.what)}</div>` : ''}
+                ${d.action.when ? `<div><strong>When:</strong> ${escHtml(d.action.when)}</div>` : ''}
+                ${d.action.why  ? `<div><strong>Why:</strong>  ${escHtml(d.action.why)}</div>`  : ''}
+              </div>
+            </div>
+          </div>` : ''}
+
+          ${factorsHTML}
+          ${signalsHTML}
+
+          ${d.summary ? `
+          <div class="ans-block" style="border-top:1px solid var(--border); padding-top:12px; margin-top:4px">
+            <div class="ans-label">📝 Plain English Summary</div>
+            <div class="ans-value" style="font-size:13px; color:var(--text2); line-height:1.7">
+              ${escHtml(d.summary)}
+            </div>
+          </div>` : ''}
+
+        </div>` : ''}
+
+      </div>
+    </div>`;
+
+  addAssistantMessage(html);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// THINKING INDICATOR
+// ─────────────────────────────────────────────────────────────────────────────
+let thinkCounter = 0;
+function addThinkingIndicator() {
+  const id = 'think-' + (++thinkCounter);
+  const msgs = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'msg assistant'; div.id = id;
+  div.innerHTML = `
+    <div class="msg-avatar">🤖</div>
+    <div class="msg-content">
+      <div class="msg-bubble" style="padding:12px 16px">
+        <div class="typing-indicator">
+          <div class="typing-dots">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+          <div class="thinking-steps" id="${id}-steps">
+            <div class="thinking-step"><span class="ts-icon">🔍</span> Initialising…</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  msgs.appendChild(div);
+  scrollToBottom();
+  return id;
+}
+
+function updateThinkingStep(id, text) {
+  const el = document.getElementById(id + '-steps');
+  if (el) {
+    el.innerHTML = `<div class="thinking-step"><span class="ts-icon">${text.split(' ')[0]}</span> ${text.slice(text.indexOf(' ')+1)}</div>`;
+  }
+}
+
+function removeThinkingIndicator(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────────────────────────────────────────
+function scrollToBottom() {
+  const msgs = document.getElementById('messages');
+  setTimeout(() => msgs.scrollTop = msgs.scrollHeight, 50);
+}
+
+function escHtml(s) {
+  if (!s) return '';
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function mdToHtml(text) {
+  return escHtml(text)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/`(.+?)`/g, '<code style="background:var(--surface2);padding:1px 5px;border-radius:3px;font-family:\'DM Mono\',monospace;font-size:11px">$1</code>')
+    .replace(/\n/g, '<br>');
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+function toggleDetail(id, btn) {
+  const el = document.getElementById(id);
+  const isOpen = el.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+  btn.innerHTML = isOpen
+    ? '<span class="ct-arrow">▶</span> Hide details'
+    : '<span class="ct-arrow">▶</span> See more details';
+}
+
+function showToast(msg, type = 'error') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  t.style.background = type === 'green' ? 'rgba(0,229,160,0.12)' : 'rgba(255,95,109,0.12)';
+  t.style.borderColor = type === 'green' ? 'rgba(0,229,160,0.3)' : 'rgba(255,95,109,0.3)';
+  t.style.color = type === 'green' ? 'var(--green)' : 'var(--red)';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.style.display = 'none', 3500);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// THEME SWITCHER
+// ─────────────────────────────────────────────────────────────────────────────
+const themeIcons = {
+  dark: '🌙', ocean: '🌊', forest: '🌿', sunset: '🌅', lavender: '💜', cherry: '🍒', light: '☀️'
+};
+
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.body.setAttribute('data-theme', theme);
+  localStorage.setItem('inveniq-theme', theme);
+  document.getElementById('themeIcon').textContent = themeIcons[theme] || '🎨';
+  document.getElementById('themeLabel').textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
+  document.querySelectorAll('.theme-option').forEach(o => {
+    o.classList.toggle('active', o.dataset.theme === theme);
+  });
+  closeThemeDropdown();
+}
+
+function toggleThemeDropdown() {
+  document.getElementById('themeDropdown').classList.toggle('open');
+}
+
+function closeThemeDropdown() {
+  document.getElementById('themeDropdown').classList.remove('open');
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', e => {
+  if (!e.target.closest('.theme-switcher')) closeThemeDropdown();
+});
+
+// Restore saved theme on load
+(function() {
+  const saved = localStorage.getItem('inveniq-theme');
+  if (saved) setTheme(saved);
+})();
+</script>
+</body>
+</html>
