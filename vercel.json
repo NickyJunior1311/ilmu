@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/chat", "destination": "api/glm_backend.py" },
+    { "source": "/search-signal", "destination": "api/glm_backend.py" },
+    { "source": "/(.*)", "destination": "/inventory_chat_api.html" }
+  ]
+}

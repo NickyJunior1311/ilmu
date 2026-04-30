@@ -1,0 +1,5 @@
+fastapi
+pydantic
+anthropic
+duckduckgo_search
+uvicorn
