@@ -25,7 +25,7 @@ logger = logging.getLogger("inveniq")
 client = AsyncAnthropic(
     base_url="https://api.z.ai/api/anthropic",
     api_key=os.environ.get("ZAI_API_KEY", ""),
-    timeout=6.0,  # tight: Vercel Hobby kills the function at 10s total (incl cold start)
+    timeout=9.0,  # Vercel Hobby kills at 10s; leave 1s for response serialization
 )
  
 app = FastAPI(title="InvenIQ Backend (ILMU)", version="4.2.0-vercel")
@@ -130,8 +130,8 @@ Your primary job is to help the user manage their stock, analyze sales data, and
 RULES:
 1. Be highly analytical, precise, and professional.
 2. Format your answers clearly using bullet points or short paragraphs.
-3. When the user asks about current news, events, market trends, weather, calendar info, or any real-time unstructured data, use the web_search tool to fetch up-to-date information before answering.
-4. If web_search returns an error or rate-limit message, DO NOT call it again. Answer using your existing knowledge and clearly tell the user that live data was unavailable.
+3. You do NOT have live web access in this chat. Answer from your existing knowledge.
+4. If the user asks about current news, weather, calendar dates, or market trends, tell them to use the dedicated "Signal Fetch" buttons in the side panel (Calendar / Weather / News / Raw) which fetch live data, then paste the results into the chat for you to analyze.
 5. If you need more data (like a CSV file or numbers) to answer a question, ask the user to provide it.
 """
  
@@ -281,7 +281,7 @@ def search_signal(req: SignalSearchRequest):
     return payload
  
  
-# ── Chat endpoint (Anthropic schema: tool_use / tool_result blocks) ───────────
+# ── Chat endpoint (single call, no tool loop — fits Vercel's 10s budget) ──────
 @app.post("/chat")
 async def chat(req: ChatRequest):
     try:
@@ -294,77 +294,24 @@ async def chat(req: ChatRequest):
             else:
                 chat_messages.append(msg)
  
-        common_kwargs = {
-            "model": req.model,
-            "temperature": req.temperature,
-            "max_tokens": req.max_tokens,
-            "system": system_msg,
-            "tools": [WEB_SEARCH_TOOL],
-        }
- 
-        # First call
-        response = await client.messages.create(messages=chat_messages, **common_kwargs)
- 
-        # Tool loop: 1 iteration only on Vercel (10s budget).
-        # Each iteration = 1 ILMU call (~2-4s) + 1 DDGS (~3-5s) + 1 final ILMU (~2-4s).
-        max_iterations = 1
-        for _ in range(max_iterations):
-            tool_use_blocks = [b for b in response.content if b.type == "tool_use"]
-            if not tool_use_blocks:
-                break
- 
-            # Serialize assistant content blocks to plain dicts before sending
-            # them back. The Anthropic SDK returns typed objects; the API
-            # expects a list of dicts on the way back in.
-            assistant_content = []
-            for b in response.content:
-                if b.type == "text":
-                    assistant_content.append({"type": "text", "text": b.text})
-                elif b.type == "tool_use":
-                    assistant_content.append({
-                        "type": "tool_use",
-                        "id": b.id,
-                        "name": b.name,
-                        "input": b.input,
-                    })
-            chat_messages.append({"role": "assistant", "content": assistant_content})
- 
-            # Execute each tool call
-            tool_results = []
-            for block in tool_use_blocks:
-                if block.name == "web_search":
-                    query = block.input.get("query", "")
-                    logger.info("Tool web_search query: %s", query)
-                    search_result = perform_web_search(query)
-                else:
-                    logger.warning("Unknown tool requested: %s", block.name)
-                    search_result = f"Unknown tool: {block.name}"
-                tool_results.append({
-                    "type": "tool_result",
-                    "tool_use_id": block.id,
-                    "content": search_result,
-                })
- 
-            chat_messages.append({"role": "user", "content": tool_results})
- 
-            response = await client.messages.create(messages=chat_messages, **common_kwargs)
+        # Single call. No tools. Live data comes via /search-signal endpoints
+        # which the frontend's "Signal Fetch" buttons already use.
+        response = await client.messages.create(
+            messages=chat_messages,
+            model=req.model,
+            temperature=req.temperature,
+            max_tokens=req.max_tokens,
+            system=system_msg,
+        )
  
         # Extract final text
         final_text = "".join(
             block.text for block in response.content if block.type == "text"
         )
  
-        # Safety net: if the model is STILL trying to call tools, give a
-        # clean fallback rather than empty content.
         if not final_text:
-            still_trying = any(b.type == "tool_use" for b in response.content)
-            if still_trying:
-                final_text = ("I tried to look up live information but the search service "
-                              "kept failing. Please try again in a moment, or rephrase your "
-                              "question so I can answer from existing knowledge.")
-            else:
-                final_text = ("(No response generated. The model returned an empty reply — "
-                              "please try rephrasing your question.)")
+            final_text = ("(No response generated. The model returned an empty reply — "
+                          "please try rephrasing your question.)")
  
         return {
             "content": final_text,
@@ -375,9 +322,7 @@ async def chat(req: ChatRequest):
             },
         }
     except Exception as e:
-        logger.exception("ILMU API ERROR")
-        # Return a `content` key so the frontend renders an error message
-        # instead of a blank reply.
+        logger.exception("ZAI API ERROR")
         return {
             "content": f"⚠️ Backend error: {type(e).__name__}: {e}",
             "error": str(e),
