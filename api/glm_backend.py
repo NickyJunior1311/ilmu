@@ -40,9 +40,9 @@ app.add_middleware(
 # ── Request models ────────────────────────────────────────────────────────────
 class ChatRequest(BaseModel):
     messages: list
-    model: str = "glm-5.1"
+    model: str = "glm-5-turbo"
     temperature: float = 0.1
-    max_tokens: int = 8192
+    max_tokens: int = 1500
  
 class SignalSearchRequest(BaseModel):
     category: str   # "weather", "calendar", "news", "raw"
@@ -334,7 +334,7 @@ async def chat(req: ChatRequest):
 def health():
     return {
         "status": "online",
-        "model": "glm-5.1",
+        "model": "glm-5-turbo",
         "provider": "Z.AI",
         "key_configured": bool(os.environ.get("ZAI_API_KEY")),
     }
