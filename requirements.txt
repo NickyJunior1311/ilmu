@@ -1,5 +1,6 @@
-fastapi
-pydantic
-anthropic
-duckduckgo_search
-python-multipart
+fastapi==0.115.0
+pydantic==2.9.2
+anthropic==0.39.0
+duckduckgo_search==6.3.0
+python-multipart==0.0.12
+uvicorn==0.32.0
