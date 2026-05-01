@@ -1,5 +1,6 @@
 import time
 import logging
+import os
 import urllib.request
 import urllib.parse
 import json
@@ -19,10 +20,12 @@ logging.basicConfig(
 logger = logging.getLogger("inveniq")
  
 # ── Anthropic client (async, with timeout) ────────────────────────────────────
+# Z.AI exposes an Anthropic-compatible endpoint. Set ZAI_API_KEY in Vercel
+# Dashboard → Settings → Environment Variables, then redeploy.
 client = AsyncAnthropic(
     base_url="https://api.z.ai/api/anthropic",
-    api_key="7959c551678b4ff2ad679e6994d49017.4XAHAELzkqpWdutF",
-    timeout=8.0,  # tight: Vercel Hobby kills the function at 10s total
+    api_key=os.environ.get("ZAI_API_KEY", ""),
+    timeout=6.0,  # tight: Vercel Hobby kills the function at 10s total (incl cold start)
 )
  
 app = FastAPI(title="InvenIQ Backend (ILMU)", version="4.2.0-vercel")
@@ -82,7 +85,7 @@ def _ddgs_search(
     last_err: str | None = None
     for attempt in range(max_retries):
         try:
-            with DDGS(timeout=5) as ddgs:
+            with DDGS(timeout=3) as ddgs:
                 results = list(ddgs.text(query, max_results=max_results))
             if results:
                 return results, None
@@ -157,7 +160,9 @@ def _signal_queries(year: int) -> dict[str, list[str]]:
 # ── Weather (wttr.in) ─────────────────────────────────────────────────────────
 def fetch_weather_wttr(location: str = "Malaysia") -> str:
     """Free, no-API-key weather. Kept under 8s total on Vercel."""
-    cities = ["Kuala Lumpur", "Johor Bahru", "Penang", "Kota Kinabalu"]
+    # Limited to 2 cities to stay under Vercel Hobby's 10s function timeout
+    # (each city has a 2s budget, plus JSON parsing overhead).
+    cities = ["Kuala Lumpur", "Penang"]
     parts = []
     for city in cities:
         try:
@@ -308,8 +313,21 @@ async def chat(req: ChatRequest):
             if not tool_use_blocks:
                 break
  
-            # Append assistant's tool-call turn
-            chat_messages.append({"role": "assistant", "content": response.content})
+            # Serialize assistant content blocks to plain dicts before sending
+            # them back. The Anthropic SDK returns typed objects; the API
+            # expects a list of dicts on the way back in.
+            assistant_content = []
+            for b in response.content:
+                if b.type == "text":
+                    assistant_content.append({"type": "text", "text": b.text})
+                elif b.type == "tool_use":
+                    assistant_content.append({
+                        "type": "tool_use",
+                        "id": b.id,
+                        "name": b.name,
+                        "input": b.input,
+                    })
+            chat_messages.append({"role": "assistant", "content": assistant_content})
  
             # Execute each tool call
             tool_results = []
@@ -344,6 +362,9 @@ async def chat(req: ChatRequest):
                 final_text = ("I tried to look up live information but the search service "
                               "kept failing. Please try again in a moment, or rephrase your "
                               "question so I can answer from existing knowledge.")
+            else:
+                final_text = ("(No response generated. The model returned an empty reply — "
+                              "please try rephrasing your question.)")
  
         return {
             "content": final_text,
@@ -355,7 +376,12 @@ async def chat(req: ChatRequest):
         }
     except Exception as e:
         logger.exception("ILMU API ERROR")
-        return {"error": str(e)}
+        # Return a `content` key so the frontend renders an error message
+        # instead of a blank reply.
+        return {
+            "content": f"⚠️ Backend error: {type(e).__name__}: {e}",
+            "error": str(e),
+        }
  
  
 # ── Health check ──────────────────────────────────────────────────────────────
@@ -363,14 +389,15 @@ async def chat(req: ChatRequest):
 def health():
     return {
         "status": "online",
-        "model": "ilmu-glm-5.1",
-        "provider": "ILMU",
+        "model": "glm-5.1",
+        "provider": "Z.AI",
+        "key_configured": bool(os.environ.get("ZAI_API_KEY")),
     }
-
+ 
 # ── Vercel ASGI handler ───────────────────────────────────────────────────────
 # Vercel's Python runtime needs an adapter to talk to FastAPI (ASGI).
 # Mangum exposes `handler` which Vercel will invoke for each request.
 handler = Mangum(app, lifespan="off")
- 
-# NOTE: No `if __name__ == "__main__"` block — Vercel imports `app` directly.
+
+# NOTE: No `if __name__ == "__main__"` block — Vercel imports `app`/`handler` directly.
 # To run locally:  uvicorn glm_backend:app --reload --port 8000
