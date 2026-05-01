@@ -1,16 +1,15 @@
 import time
 import logging
-import os
 import urllib.request
 import urllib.parse
 import json
 from datetime import datetime
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from anthropic import AsyncAnthropic
 from duckduckgo_search import DDGS
-from mangum import Mangum
  
 # ── Logging ───────────────────────────────────────────────────────────────────
 logging.basicConfig(
@@ -24,8 +23,8 @@ logger = logging.getLogger("inveniq")
 # Dashboard → Settings → Environment Variables, then redeploy.
 client = AsyncAnthropic(
     base_url="https://api.z.ai/api/anthropic",
-    api_key=os.environ.get("ZAI_API_KEY", ""),
-    timeout=9.0,  # Vercel Hobby kills at 10s; leave 1s for response serialization
+    api_key="REPLACE_WITH_YOUR_ZAI_API_KEY",  # ⚠️ Generate a fresh key in Z.AI dashboard. Keep this repo PRIVATE.
+    timeout=60.0,  # Render has no per-request timeout — give GLM room to think
 )
  
 app = FastAPI(title="InvenIQ Backend (ILMU)", version="4.2.0-vercel")
@@ -40,9 +39,9 @@ app.add_middleware(
 # ── Request models ────────────────────────────────────────────────────────────
 class ChatRequest(BaseModel):
     messages: list
-    model: str = "glm-5-turbo"
+    model: str = "glm-5.1"
     temperature: float = 0.1
-    max_tokens: int = 1500
+    max_tokens: int = 4096
  
 class SignalSearchRequest(BaseModel):
     category: str   # "weather", "calendar", "news", "raw"
@@ -334,15 +333,16 @@ async def chat(req: ChatRequest):
 def health():
     return {
         "status": "online",
-        "model": "glm-5-turbo",
+        "model": "glm-5.1",
         "provider": "Z.AI",
-        "key_configured": bool(os.environ.get("ZAI_API_KEY")),
     }
- 
-# ── Vercel ASGI handler ───────────────────────────────────────────────────────
-# Vercel's Python runtime needs an adapter to talk to FastAPI (ASGI).
-# Mangum exposes `handler` which Vercel will invoke for each request.
-handler = Mangum(app, lifespan="off")
 
-# NOTE: No `if __name__ == "__main__"` block — Vercel imports `app`/`handler` directly.
-# To run locally:  uvicorn glm_backend:app --reload --port 8000
+
+# ── Serve frontend ────────────────────────────────────────────────────────────
+@app.get("/")
+def serve_frontend():
+    """Serve inventory_chat_api.html as the homepage."""
+    return FileResponse("inventory_chat_api.html")
+ 
+# NOTE: To run locally:  uvicorn glm_backend:app --reload --port 8000
+# On Render: set Start Command to `uvicorn glm_backend:app --host 0.0.0.0 --port $PORT`
