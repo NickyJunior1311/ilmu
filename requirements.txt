@@ -3,3 +3,4 @@ pydantic
 anthropic
 duckduckgo_search
 python-multipart
+mangum
