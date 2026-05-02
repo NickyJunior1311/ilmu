@@ -395,6 +395,13 @@ def _cache_set(key: str, payload: dict) -> None:
 
 
 # ── Signal search endpoint ────────────────────────────────────────────────────
+# DEF-03 FIX: Decoupled from /chat to prevent slow third-party APIs (wttr.in,
+# search providers) from blocking the AI response. Previously, synchronous
+# fetching of 4 weather cities inside the chat handler caused the entire
+# request to TimeoutError after 10s when wttr.in was slow. Signal fetching
+# now lives in this dedicated endpoint with 5-min in-memory caching, called
+# separately by the frontend's "Signal Fetch" buttons. Chat stays snappy;
+# signals stay fresh-but-cheap.
 @app.post("/search-signal")
 def search_signal(req: SignalSearchRequest):
     cache_key = f"{req.category}|{req.location}|{req.context}"
