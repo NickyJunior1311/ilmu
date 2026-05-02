@@ -22,11 +22,21 @@ logging.basicConfig(
 logger = logging.getLogger("inveniq")
 
 # ── Anthropic client (async, with timeout) ────────────────────────────────────
-# Z.AI exposes an Anthropic-compatible endpoint. Set ZAI_API_KEY in Vercel
-# Dashboard → Settings → Environment Variables, then redeploy.
+# TD-02 FIX: API key is now loaded EXCLUSIVELY from the ZAI_API_KEY env var.
+# The previous hardcoded fallback has been removed because the original key
+# was committed to git history and must be considered leaked. Set ZAI_API_KEY
+# in your Render dashboard (Environment tab) and redeploy.
+ZAI_API_KEY = os.getenv("ZAI_API_KEY", "").strip()
+if not ZAI_API_KEY:
+    raise RuntimeError(
+        "ZAI_API_KEY environment variable is not set. "
+        "Add it in Render → Environment → Add Environment Variable, then redeploy. "
+        "Generate a key at https://z.ai/manage-apikey/apikey-list"
+    )
+ 
 client = AsyncAnthropic(
     base_url="https://api.z.ai/api/anthropic",
-    api_key=os.getenv("ZAI_API_KEY", "7959c551678b4ff2ad679e6994d49017.4XAHAELzkqpWdutF"),
+    api_key=ZAI_API_KEY,
     timeout=60.0,
 )
 
