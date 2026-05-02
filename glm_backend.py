@@ -40,7 +40,7 @@ client = AsyncAnthropic(
     timeout=60.0,
 )
 
-app = FastAPI(title="InvenIQ Backend (ILMU)", version="4.3.0-vercel")
+app = FastAPI(title="InvenIQ Backend", version="glm-5.1")
 
 app.add_middleware(
     CORSMiddleware,
